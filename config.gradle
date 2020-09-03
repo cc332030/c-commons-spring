@@ -10,6 +10,7 @@ ext {
 
     c_commons_java: '0.0.1-SNAPSHOT'
     , c_commons_mybatis: '0.0.1-SNAPSHOT'
+    , c_commons_web: '0.0.1-SNAPSHOT'
 
     , spring: '5.2.8.RELEASE'
     , spring_data_redis: '2.3.2.RELEASE'
