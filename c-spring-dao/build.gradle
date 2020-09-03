@@ -1,0 +1,6 @@
+
+dependencies {
+
+    api group: 'com.c332030.mybatis', name: 'c-mybatis-dao', version: versions.c_commons_mybatis
+
+}

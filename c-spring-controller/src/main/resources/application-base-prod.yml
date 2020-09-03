@@ -1,0 +1,13 @@
+
+spring:
+  profiles:
+    include:
+      - linux
+      - log-file
+
+logging:
+  level:
+    root: info
+  file:
+#    避免以月为单位的 bug
+    max-history: 32

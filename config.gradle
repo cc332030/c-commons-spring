@@ -1,0 +1,35 @@
+
+ext {
+
+  group = 'com.c332030.spring'
+  version = '0.0.1-SNAPSHOT'
+
+  charset = 'utf-8'
+
+  versions = [
+
+    c_commons_java: '0.0.1-SNAPSHOT'
+    , c_commons_mybatis: '0.0.1-SNAPSHOT'
+
+    , spring: '5.2.8.RELEASE'
+    , spring_data_redis: '2.3.2.RELEASE'
+
+    , servlet: '4.0.1'
+    , quartz: '2.3.2'
+
+    , mybatis: '3.5.5'
+    , mapper: '4.1.5'
+    // , pagehelper: '5.2.0'
+
+    // , mybatis_starter: '2.1.1'
+    // , mapper_starter: '2.1.5'
+    // , pagehelper_starter: '1.2.13'
+
+    , mariadb: '2.6.2'
+
+    , junit: '4.12'
+    , lombok: '1.18.12'
+
+    , logback: '1.2.3'
+  ]
+}

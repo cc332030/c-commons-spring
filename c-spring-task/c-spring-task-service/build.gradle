@@ -1,0 +1,10 @@
+
+dependencies {
+
+    api project(':c-spring-service')
+
+    api project(':c-spring-task:c-spring-task-dao')
+
+    api group: 'org.quartz-scheduler', name: 'quartz', version: versions.quartz
+
+}

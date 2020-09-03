@@ -1,0 +1,7 @@
+
+dependencies {
+
+    api project(':c-spring-controller')
+
+    api project(':c-spring-app:c-spring-app-service')
+}

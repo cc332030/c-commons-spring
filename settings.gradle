@@ -1,0 +1,38 @@
+
+pluginManagement {
+  repositories {
+    maven {
+      url 'https://nexus.local.c332030.com/repository/maven-public/'
+    }
+  }
+}
+
+rootProject.name = 'c-commons-spring'
+
+include 'c-spring-entity'
+include 'c-spring-constant'
+include 'c-spring-model'
+
+include 'c-spring-util'
+
+include 'c-spring-dao'
+include 'c-spring-service'
+include 'c-spring-controller'
+
+include 'c-spring-app'
+include 'c-spring-app:c-spring-app-model'
+include 'c-spring-app:c-spring-app-dao'
+include 'c-spring-app:c-spring-app-service'
+include 'c-spring-app:c-spring-app-controller'
+
+include 'c-spring-api'
+include 'c-spring-api:c-spring-api-model'
+include 'c-spring-api:c-spring-api-dao'
+include 'c-spring-api:c-spring-api-service'
+include 'c-spring-api:c-spring-api-controller'
+
+include 'c-spring-task'
+include 'c-spring-task:c-spring-task-model'
+include 'c-spring-task:c-spring-task-dao'
+include 'c-spring-task:c-spring-task-service'
+include 'c-spring-task:c-spring-task-controller'

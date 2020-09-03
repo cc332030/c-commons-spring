@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--
+  Description: logback-file.xml
+  User: c332030
+  Version 1.0
+-->
+
+<included>
+  <!-- 表示控制台输出 -->
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>${logging.level.root}</level>
+    </filter>
+
+    <encoder>
+      <pattern>${logging.pattern}</pattern>
+      <charset>${logging.charset}</charset>
+    </encoder>
+  </appender>
+
+  <root level="${logging.level.root}">
+    <appender-ref ref="STDOUT" />
+  </root>
+
+</included>

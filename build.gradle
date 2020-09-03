@@ -1,0 +1,138 @@
+def versions = rootProject.ext.versions
+
+buildscript {
+
+  apply from: 'config.gradle'
+
+  versions = rootProject.ext.versions
+
+  repositories {
+    maven {
+      url 'https://nexus.local.c332030.com/repository/maven-public/'
+    }
+  }
+}
+
+subprojects {
+
+  apply plugin: 'java-library'
+  apply plugin: 'maven-publish'
+
+  group = rootProject.ext.group
+  version = rootProject.ext.version
+
+  [compileJava, compileTestJava, javadoc]*.options*.encoding = rootProject.ext.charset
+
+  jar {
+    enabled = true
+
+    into("META-INF/maven/$project.group/$project.name") {
+      from { generatePomFileForMavenPublication }
+      rename ".*", "pom.xml"
+    }
+  }
+
+  java {
+    withJavadocJar()
+    withSourcesJar()
+  }
+
+  repositories {
+    maven {
+      url 'https://nexus.local.c332030.com/repository/maven-public/'
+    }
+  }
+
+  dependencies {
+
+    compileOnly group: 'org.springframework', name: 'spring-core', version: versions.spring
+    testCompileOnly group: 'org.springframework', name: 'spring-core', version: versions.spring
+    compileOnly group: 'org.springframework', name: 'spring-beans', version: versions.spring
+    testCompileOnly group: 'org.springframework', name: 'spring-beans', version: versions.spring
+    compileOnly group: 'org.springframework', name: 'spring-context', version: versions.spring
+    testCompileOnly group: 'org.springframework', name: 'spring-context', version: versions.spring
+    compileOnly group: 'org.springframework', name: 'spring-aop', version: versions.spring
+    testCompileOnly group: 'org.springframework', name: 'spring-aop', version: versions.spring
+
+    compileOnly group: 'org.springframework', name: 'spring-context-support', version: versions.spring
+    testCompileOnly group: 'org.springframework', name: 'spring-context-support', version: versions.spring
+    compileOnly group: 'org.springframework', name: 'spring-tx', version: versions.spring
+    testCompileOnly group: 'org.springframework', name: 'spring-tx', version: versions.spring
+
+    compileOnly group: 'org.springframework', name: 'spring-web', version: versions.spring
+    testCompileOnly group: 'org.springframework', name: 'spring-web', version: versions.spring
+    compileOnly group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
+    testCompileOnly group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
+
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
+    testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
+
+    // mariadb
+    // api group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: versions.mariadb
+
+    testImplementation group: 'junit', name: 'junit', version: versions.junit
+
+    // lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+
+  }
+
+  // 实时更新 snapshots
+  configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
+    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+  }
+
+  publishing {
+
+    publications {
+
+      maven(MavenPublication) {
+        groupId project.group
+        artifactId project.name
+        version project.version
+
+        from components.java
+      }
+    }
+
+    repositories {
+
+      maven {
+
+        def releasesRepoUrl = "https://nexus.local.c332030.com/repository/maven-releases/"
+        def snapshotsRepoUrl = "https://nexus.local.c332030.com/repository/maven-snapshots/"
+        url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+        credentials {
+          username 'admin'
+          password '123456'
+        }
+      }
+    }
+  }
+
+  // 避免 mapper xml 未复制到 classes 目录
+  sourceSets {
+    //noinspection GroovyAssignabilityCheck
+    main {
+      //noinspection GroovyAssignabilityCheck
+      resources {
+        //可以将java目录下的所有非.java资源打包到classes下
+        srcDir 'src/main/java'
+      }
+    }
+  }
+
+  // 测试配置
+  test {
+    // include '**/Test*.class'
+
+    exclude '**/*Test*.class'
+  }
+
+}

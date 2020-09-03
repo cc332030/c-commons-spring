@@ -1,0 +1,8 @@
+
+dependencies {
+
+  api group: 'com.c332030.web', name: 'c-web-servlet-util', version: versions.c_commons_java
+
+  api project(':c-spring-model')
+
+}

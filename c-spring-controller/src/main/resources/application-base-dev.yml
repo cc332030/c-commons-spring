@@ -1,0 +1,9 @@
+
+spring:
+  profiles:
+    include:
+      - windows
+
+logging:
+  level:
+    root: debug

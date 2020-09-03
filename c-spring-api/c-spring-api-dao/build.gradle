@@ -1,0 +1,7 @@
+
+dependencies {
+
+    api project(':c-spring-dao')
+
+    api project(':c-spring-api:c-spring-api-model')
+}

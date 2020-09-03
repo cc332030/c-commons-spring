@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Description: logback-file-error
+  User: c332030
+  Version 1.0
+-->
+
+<included>
+
+  <property name="logging.name.error" value="error" />
+
+  <!-- 输出到文件 ERROR -->
+  <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+    <file>${logging.file.path}/${spring.application.name}/${logging.name.error}.log</file>
+
+    <!-- 只记录此级别的日志 -->
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+
+    <encoder>
+      <pattern>${logging.pattern}</pattern>
+      <charset>utf8</charset>
+    </encoder>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+      <fileNamePattern>${logging.file.path}/${logging.name.error}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      <maxHistory>${logging.file.max-history}</maxHistory>
+
+      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+        <maxFileSize>${logging.file.max-size}</maxFileSize>
+      </timeBasedFileNamingAndTriggeringPolicy>
+
+    </rollingPolicy>
+
+  </appender>
+
+  <!-- 异步日志 -->
+  <appender name="ERROR_FILE_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+    <!-- 设置为不丢失日志,默认如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+    <discardingThreshold >0</discardingThreshold>
+    <!-- 更改默认的队列的深度,默认值为256 -->
+    <queueSize>1000</queueSize>
+    <appender-ref ref ="ERROR_FILE"/>
+  </appender>
+
+  <root level="${logging.level.root}">
+    <appender-ref ref="ERROR_FILE_ASYNC"/>
+  </root>
+
+</included>
