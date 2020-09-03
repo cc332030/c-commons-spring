@@ -2,4 +2,7 @@
 dependencies {
 
     api project(':c-spring-service')
+
+    api group: 'com.c332030.web', name: 'c-web-filter-provider', version: versions.c_commons_web
+
 }

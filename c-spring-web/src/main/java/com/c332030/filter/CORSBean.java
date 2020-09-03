@@ -1,4 +1,4 @@
-package com.c332030.config;
+package com.c332030.filter;
 
 import java.util.Arrays;
 
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 import com.c332030.util.data.StringUtils;
+import com.c332030.web.filter.CORSFilter;
+import com.c332030.web.filter.model.CORSConfig;
 
 /**
  * <p>
@@ -25,7 +27,8 @@ import com.c332030.util.data.StringUtils;
     value = "classpath:cors.properties"
     , ignoreResourceNotFound = true
 )
-public class CORSConfigBean {
+// @ConfigurationProperties(prefix = "filter.cors")
+public class CORSBean {
 
     /**
      * origin 请求源
@@ -52,23 +55,25 @@ public class CORSConfigBean {
     private boolean credentials;
 
     @Bean
-    public CORSConfig getCORSConfig() {
+    public CORSFilter CORSFilter() {
 
         log.info("origins: {}, methods: {}, headers: {}, credentials: {}", origins, methods, headers, credentials);
 
         boolean originsEmpty = StringUtils.isEmpty(origins);
         boolean methodsEmpty = StringUtils.isEmpty(methods);
         boolean headersEmpty = StringUtils.isEmpty(headers);
+
+        CORSConfig corsConfig = null;
         if(originsEmpty && methodsEmpty && headersEmpty) {
             log.warn("cors attribute are empty");
-            return CORSConfig.EMPTY;
+        } else {
+            corsConfig = new CORSConfig();
+            corsConfig.setOrigins(Arrays.asList(origins.split(",")));
+            corsConfig.setMethods(methodsEmpty ? null : methods);
+            corsConfig.setHeaders(headersEmpty ? null : headers);
+            corsConfig.setCredentials(credentials);
         }
 
-        CORSConfig corsConfig = new CORSConfig();
-        corsConfig.setOrigins(Arrays.asList(origins.split(",")));
-        corsConfig.setMethods(methodsEmpty ? null : methods);
-        corsConfig.setHeaders(headersEmpty ? null : headers);
-        corsConfig.setCredentials(credentials);
-        return corsConfig;
+        return new CORSFilter(corsConfig);
     }
 }
