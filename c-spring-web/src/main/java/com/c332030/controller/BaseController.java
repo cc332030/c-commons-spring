@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.extern.slf4j.Slf4j;
 
-import com.c332030.constant.sys.CharsetConstants;
+import com.c332030.constant.CharsetConstants;
 import com.c332030.util.data.StringUtils;
 
 /**

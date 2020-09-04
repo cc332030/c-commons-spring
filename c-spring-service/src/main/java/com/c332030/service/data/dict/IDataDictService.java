@@ -2,8 +2,8 @@ package com.c332030.service.data.dict;
 
 import lombok.NonNull;
 
+import com.c332030.constant.PackageConstants;
 import com.c332030.constant.enumerable.data.IDataDictEnum;
-import com.c332030.constant.sys.SysConstants;
 
 /**
  * <p>
@@ -15,7 +15,7 @@ import com.c332030.constant.sys.SysConstants;
  */
 public interface IDataDictService {
 
-    String DATA_BASE_PACKAGE = SysConstants.PackageName.C_BASE;
+    String DATA_BASE_PACKAGE = PackageConstants.BASE;
 
     /**
      * <p>
