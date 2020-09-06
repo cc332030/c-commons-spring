@@ -13,7 +13,8 @@
   <!-- 输出到文件 常规 -->
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
-    <file>${logging.file.path}/${spring.application.name}/${logging.name.default}.log</file>
+    <!--<file>${logging.file.path}/${spring.application.name}/${logging.name.default}.log</file>-->
+    <file>${logging.file.path}/${logging.name.default}.log</file>
 
     <!-- 过滤低于此级别的记录 -->
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
