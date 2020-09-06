@@ -24,8 +24,8 @@
     <!-- 过滤低于此级别的记录 -->
     <filter class="ch.qos.logback.classic.filter.LevelFilter">
       <level>ERROR</level>
-      <!--<onMatch>ACCEPT</onMatch>-->
-      <!--<onMismatch>DENY</onMismatch>-->
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
     </filter>
 
     <encoder>
