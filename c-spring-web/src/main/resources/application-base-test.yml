@@ -7,7 +7,7 @@ spring:
 
 logging:
   level:
-    root: debug
+    root: info
   file:
 #    避免以月为单位的 bug
     max-history: 32
