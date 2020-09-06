@@ -13,8 +13,13 @@
   <!-- 输出到文件 常规 -->
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
-    <!--<file>${logging.file.path}/${spring.application.name}/${logging.name.default}.log</file>-->
-    <file>${logging.file.path}/${logging.name.default}.log</file>
+    <springProfile name="default,dev">
+      <file>${logging.file.path}/${spring.application.name}/${logging.name.default}.log</file>
+    </springProfile>
+
+    <springProfile name="test,prod">
+      <file>${logging.file.path}/${logging.name.default}.log</file>
+    </springProfile>
 
     <!-- 过滤低于此级别的记录 -->
     <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
@@ -28,7 +33,14 @@
 
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
-      <fileNamePattern>${logging.file.path}/${logging.name.default}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      <springProfile name="default,dev">
+        <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.name.default}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      </springProfile>
+
+      <springProfile name="test,prod">
+        <fileNamePattern>${logging.file.path}/${logging.name.default}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+      </springProfile>
+
       <maxHistory>${logging.file.max-history}</maxHistory>
 
       <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">

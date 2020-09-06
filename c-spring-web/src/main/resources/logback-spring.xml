@@ -13,6 +13,8 @@
 
   <springProfile name="default,dev">
     <include resource="logback-console.xml" />
+    <include resource="logback-file.xml" />
+    <include resource="logback-file-error.xml" />
   </springProfile>
 
   <springProfile name="test,prod">
