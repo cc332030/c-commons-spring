@@ -7,7 +7,9 @@ import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -39,6 +41,14 @@ public abstract class BaseController {
         }, ';'
     );
 
+    /**
+     * <p>
+     * Description: 输出字符串
+     * </p>
+     *
+     * @param string 字符串
+     * @author c332030
+     */
     protected void print(String string) {
 
         try {
@@ -50,6 +60,20 @@ public abstract class BaseController {
         } catch (IOException e) {
             log.error("获取响应 Writer 失败", e);
         }
-
     }
+
+    /**
+     * <p>
+     * Description: 获取成功的 newResponseEntity
+     * </p>
+     *
+     * @param t 内容
+     * @param <T> 内容类型
+     * @return ResponseEntity 实体
+     * @author c332030
+     */
+    protected static <T> ResponseEntity<T> newResponseEntityOK(T t) {
+        return new ResponseEntity<>(t, HttpStatus.OK);
+    }
+
 }
