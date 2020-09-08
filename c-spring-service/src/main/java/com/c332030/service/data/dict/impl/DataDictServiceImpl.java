@@ -59,7 +59,7 @@ public class DataDictServiceImpl implements IDataDictService {
             add(dataDict);
         });
 
-        log.info("DataDictServiceImpl Initialized");
+        log.info("Initialized");
     }
 
     public static void add(Class<IDataDictEnum> dataDictClass) {
