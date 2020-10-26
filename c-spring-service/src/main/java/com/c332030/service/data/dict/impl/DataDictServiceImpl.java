@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import com.c332030.constant.enumerable.annotation.GenerateDataDict;
 import com.c332030.constant.enumerable.data.IDataDictEnum;
 import com.c332030.model.sys.KeyValue;
-import com.c332030.service.BaseSpringService;
+import com.c332030.service.SpringBaseService;
 import com.c332030.service.data.dict.IDataDictService;
 import com.c332030.util.data.JSONUtils;
 
@@ -35,7 +35,7 @@ import com.c332030.util.data.JSONUtils;
  */
 @Slf4j
 @Service
-public class DataDictServiceImpl extends BaseSpringService implements IDataDictService {
+public class DataDictServiceImpl extends SpringBaseService implements IDataDictService {
 
     /**
      * 数据字典map

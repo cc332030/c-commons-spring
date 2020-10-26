@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
  * @version 1.0
  */
 @Slf4j
-public abstract class BaseSpringService extends BaseService {
+public abstract class SpringBaseService extends BaseService {
 
     private static final Object EMPTY_OBJECT = new Object();
 
