@@ -32,6 +32,8 @@
   <logger name="org.springframework.data.convert.CustomConversions" level="info" />
   <logger name="org.springframework.boot.autoconfigure" level="info" />
 
+  <logger name="org.eclipse.jetty.util.DecoratedObjectFactory" level="info" />
+
   <logger name="io.netty" level="info" />
 
 </configuration>
