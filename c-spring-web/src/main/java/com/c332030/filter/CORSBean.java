@@ -64,9 +64,7 @@ public class CORSBean {
         boolean headersEmpty = StringUtils.isEmpty(headers);
 
         CORSConfig corsConfig = null;
-        if(originsEmpty && methodsEmpty && headersEmpty) {
-            log.warn("cors attribute are empty");
-        } else {
+        if(!(originsEmpty && methodsEmpty && headersEmpty)) {
             corsConfig = new CORSConfig();
             corsConfig.setOrigins(Arrays.asList(origins.split(",")));
             corsConfig.setMethods(methodsEmpty ? null : methods);
