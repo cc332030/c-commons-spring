@@ -32,7 +32,13 @@
   <logger name="org.springframework.data.convert.CustomConversions" level="info" />
   <logger name="org.springframework.boot.autoconfigure" level="info" />
 
+  <logger name="org.eclipse.jetty.io.ManagedSelector" level="info" />
+
+  <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="info" />
+  <logger name="org.eclipse.jetty.util.component.ContainerLifeCycle" level="info" />
   <logger name="org.eclipse.jetty.util.DecoratedObjectFactory" level="info" />
+  <logger name="org.eclipse.jetty.util.thread.QueuedThreadPool" level="info" />
+  <logger name="org.eclipse.jetty.util.thread.strategy.EatWhatYouKill" level="info" />
 
   <logger name="io.netty" level="info" />
 
