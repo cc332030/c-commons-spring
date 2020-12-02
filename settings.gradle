@@ -17,6 +17,11 @@ include 'c-spring-util'
 
 include 'c-spring-dao'
 include 'c-spring-service'
+
+include 'c-spring-cache'
+include 'c-spring-cache:c-spring-cache-base'
+include 'c-spring-cache:c-spring-cache-redis'
+
 include 'c-spring-web'
 
 include 'c-spring-app'

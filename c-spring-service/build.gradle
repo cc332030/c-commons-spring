@@ -10,8 +10,6 @@ dependencies {
 
     api project(':c-spring-util')
 
-    compileOnly group: 'org.springframework.data', name: 'spring-data-redis', version: versions.spring_data_redis
-
     compileOnly group: 'org.reflections', name: 'reflections', version: versions.reflections
 
 }

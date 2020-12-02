@@ -1,0 +1,8 @@
+
+dependencies {
+
+  compileOnly group: 'org.springframework.data', name: 'spring-data-redis', version: versions.spring_data_redis
+
+  api project(':c-spring-cache:c-spring-cache-base')
+
+}
