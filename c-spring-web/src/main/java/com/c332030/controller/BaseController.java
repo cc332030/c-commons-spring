@@ -51,12 +51,12 @@ public abstract class BaseController {
      */
     protected void print(String string) {
 
+        response.setContentType(DEFAULT_CONTEXT_TYPE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
         try {
             PrintWriter printWriter = response.getWriter();
             printWriter.print(string);
-
-            response.setContentType(DEFAULT_CONTEXT_TYPE);
-            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
         } catch (IOException e) {
             log.error("获取响应 Writer 失败", e);
         }
