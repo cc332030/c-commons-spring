@@ -28,27 +28,9 @@
   <!--  <appender-ref ref="ERROR_FILE_ASYNC"/>-->
   <!--</root>-->
 
-  <logger name="org.springframework.beans.factory.support.DefaultListableBeanFactory" level="info" />
-  <logger name="org.springframework.data.convert.CustomConversions" level="info" />
-  <logger name="org.springframework.boot.autoconfigure" level="info" />
+  <logger name="org.springframework" level="info" />
 
-  <logger name="org.eclipse.jetty.io.ManagedSelector" level="info" />
-
-  <logger name="org.eclipse.jetty.util.component.AbstractLifeCycle" level="info" />
-  <logger name="org.eclipse.jetty.util.component.ContainerLifeCycle" level="info" />
-  <logger name="org.eclipse.jetty.util.DecoratedObjectFactory" level="info" />
-  <logger name="org.eclipse.jetty.util.thread.QueuedThreadPool" level="info" />
-  <logger name="org.eclipse.jetty.util.thread.strategy.EatWhatYouKill" level="info" />
-
-  <logger name="org.eclipse.jetty.server.HttpConnection" level="info" />
-  <logger name="org.eclipse.jetty.http.HttpParser" level="info" />
-  <logger name="org.eclipse.jetty.server.HttpOutput" level="info" />
-  <logger name="org.eclipse.jetty.server.HttpChannel" level="info" />
-  <logger name="org.eclipse.jetty.io.ChannelEndPoint" level="info" />
-  <logger name="org.eclipse.jetty.io.WriteFlusher" level="info" />
-  <logger name="org.eclipse.jetty.server.session" level="info" />
-  <logger name="org.eclipse.jetty.webapp.WebAppContext" level="info" />
-
+  <logger name="org.eclipse.jetty" level="info" />
   <logger name="io.netty" level="info" />
 
 </configuration>
