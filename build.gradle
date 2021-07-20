@@ -1,30 +1,35 @@
-def versions = rootProject.ext.versions
-
 buildscript {
-
   apply from: 'config.gradle'
-
-  versions = rootProject.ext.versions
-
-  repositories {
-    maven {
-      url 'https://nexus.local.c332030.com/repository/maven-public/'
-    }
-  }
 }
 
-subprojects {
+plugins {
+  id "io.codearte.nexus-staging" version "0.30.0"
+}
+
+def ext = rootProject.ext
+def versions = ext.versions
+
+allprojects {
 
   apply plugin: 'java-library'
+  apply plugin: 'idea'
   apply plugin: 'maven-publish'
+  apply plugin: 'signing'
 
-  group = rootProject.ext.group
-  version = rootProject.ext.version
+  group = ext.group
+  version = ext.version
 
-  [compileJava, compileTestJava, javadoc]*.options*.encoding = rootProject.ext.charset
+  sourceCompatibility = JavaVersion.VERSION_11
+  targetCompatibility = JavaVersion.VERSION_11
+
+  [compileJava, compileTestJava, javadoc]*.options*.encoding = ext.charset
 
   jar {
     enabled = true
+
+    into("META-INF/resources") {
+      from("src/main/webapp")
+    }
 
     into("META-INF/maven/$project.group/$project.name") {
       from { generatePomFileForMavenPublication }
@@ -37,10 +42,18 @@ subprojects {
     withSourcesJar()
   }
 
+  idea {
+    module {
+      downloadJavadoc = false
+      downloadSources = false
+    }
+  }
+
   repositories {
     maven {
-      url 'https://nexus.local.c332030.com/repository/maven-public/'
+      url 'https://oss.sonatype.org/content/groups/public/'
     }
+    mavenCentral()
   }
 
   dependencies {
@@ -106,6 +119,18 @@ subprojects {
     resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
   }
 
+  sourceSets {
+    main {
+      resources {
+        srcDir 'src/main/java'
+      }
+    }
+  }
+
+  test {
+    exclude '**/*Test*.class'
+  }
+
   publishing {
 
     publications {
@@ -117,41 +142,60 @@ subprojects {
 
         from components.java
       }
+
+      mavenJava(MavenPublication) {
+        pom {
+
+          name = 'c-commons-java'
+          description = 'Java commons library'
+          url = "https://github.com/cc332030/${project.name}"
+          licenses {
+            license {
+              name = 'The Apache License, Version 2.0'
+              url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+            }
+          }
+          developers {
+            developer {
+              id = 'c332030'
+              name = 'c332030'
+              email = 'c332030@gmail.com'
+            }
+          }
+          scm {
+            connection = "scm:git:git://git@github.com:cc332030/${project.name}.git"
+            developerConnection = "scm:git:ssh://git@github.com:cc332030/${project.name}.git"
+            url = "https://github.com/cc332030/${project.name}"
+          }
+
+        }
+      }
+
     }
 
     repositories {
 
       maven {
-
-        def releasesRepoUrl = "https://nexus.local.c332030.com/repository/maven-releases/"
-        def snapshotsRepoUrl = "https://nexus.local.c332030.com/repository/maven-snapshots/"
+        def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+        def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
         url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
 
         credentials {
-          username 'admin'
-          password '123456'
+          username ossrhUsername
+          password ossrhPassword
         }
       }
     }
   }
 
-  // 避免 mapper xml 未复制到 classes 目录
-  sourceSets {
-    //noinspection GroovyAssignabilityCheck
-    main {
-      //noinspection GroovyAssignabilityCheck
-      resources {
-        //可以将java目录下的所有非.java资源打包到classes下
-        srcDir 'src/main/java'
-      }
-    }
+  signing {
+    sign publishing.publications.mavenJava
   }
 
-  // 测试配置
-  test {
-    // include '**/Test*.class'
-
-    exclude '**/*Test*.class'
+  nexusStaging {
+    packageGroup = project.group + '.' + project.name
+    // packageGroup = 'com.c332030.c-commons-java'
+    stagingProfileId = "yourStagingProfileId"
   }
 
 }
