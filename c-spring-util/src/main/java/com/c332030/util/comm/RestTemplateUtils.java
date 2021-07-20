@@ -1,12 +1,11 @@
 package com.c332030.util.comm;
 
+import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.client.RestTemplate;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
@@ -20,9 +19,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
  * @author c332030（袁兴旺）
  * @version 1.0
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class RestTemplateUtils {
-
-    private RestTemplateUtils() {}
 
     public static final RestTemplate REST_TEMPLATE = new RestTemplate();
 

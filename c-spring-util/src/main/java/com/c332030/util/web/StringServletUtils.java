@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * <p>
  * Description: ServletUtils
@@ -13,7 +16,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @author c332030
  * @version 1.0
  */
-public abstract class ServletUtils extends com.c332030.web.servlet.util.ServletUtils {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class StringServletUtils {
 
     /**
      * 获取 ServletRequestAttributes
