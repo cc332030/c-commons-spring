@@ -27,11 +27,6 @@ allprojects {
     into("META-INF/resources") {
       from("src/main/webapp")
     }
-
-    into("META-INF/maven/$project.group/$project.name") {
-      from { generatePomFileForMavenPublication }
-      rename ".*", "pom.xml"
-    }
   }
 
   java {
@@ -132,15 +127,10 @@ allprojects {
 
     publications {
 
-      maven(MavenPublication) {
-        groupId project.group
-        artifactId project.name
-        version project.version
+      mavenJava(MavenPublication) {
 
         from components.java
-      }
 
-      mavenJava(MavenPublication) {
         pom {
 
           name = 'c-commons-java'
