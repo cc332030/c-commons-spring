@@ -1,6 +1,6 @@
 
 dependencies {
 
-  api group: 'com.c332030.mybatis', name: 'c-mybatis-constant', version: versions.c_commons_mybatis
+  api group: 'com.c332030.mybatis', name: 'c-mybatis-constant', version: c_commons_mybatis_version
 
 }

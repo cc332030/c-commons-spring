@@ -1,13 +1,9 @@
-buildscript {
-  apply from: 'config.gradle'
-}
+
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
   id "io.codearte.nexus-staging" version "0.30.0"
 }
-
-def ext = rootProject.ext
-def versions = ext.versions
 
 allprojects {
 
@@ -16,100 +12,61 @@ allprojects {
   apply plugin: 'maven-publish'
   apply plugin: 'signing'
 
-  sourceCompatibility = JavaVersion.VERSION_11
-  targetCompatibility = JavaVersion.VERSION_11
-
-  [compileJava, compileTestJava, javadoc]*.options*.encoding = ext.charset
-
-  jar {
-    enabled = true
-
-    into("META-INF/resources") {
-      from("src/main/webapp")
-    }
-  }
-
-  java {
-    withJavadocJar()
-    withSourcesJar()
-  }
-
-  idea {
-    module {
-      downloadJavadoc = false
-      downloadSources = false
-    }
-  }
-
-  repositories {
-    maven {
-      url 'https://oss.sonatype.org/content/groups/public/'
-    }
-    mavenCentral()
-  }
-
   dependencies {
 
-    compileOnly group: 'org.springframework', name: 'spring-core', version: versions.spring
-    testCompileOnly group: 'org.springframework', name: 'spring-core', version: versions.spring
-    compileOnly group: 'org.springframework', name: 'spring-beans', version: versions.spring
-    testCompileOnly group: 'org.springframework', name: 'spring-beans', version: versions.spring
-    compileOnly group: 'org.springframework', name: 'spring-context', version: versions.spring
-    testCompileOnly group: 'org.springframework', name: 'spring-context', version: versions.spring
-    compileOnly group: 'org.springframework', name: 'spring-aop', version: versions.spring
-    testCompileOnly group: 'org.springframework', name: 'spring-aop', version: versions.spring
+    compileOnly group: 'org.springframework', name: 'spring-core', version: spring_version
+    testCompileOnly group: 'org.springframework', name: 'spring-core', version: spring_version
+    compileOnly group: 'org.springframework', name: 'spring-beans', version: spring_version
+    testCompileOnly group: 'org.springframework', name: 'spring-beans', version: spring_version
+    compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
+    testCompileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
+    compileOnly group: 'org.springframework', name: 'spring-aop', version: spring_version
+    testCompileOnly group: 'org.springframework', name: 'spring-aop', version: spring_version
 
-    compileOnly group: 'org.springframework', name: 'spring-context-support', version: versions.spring
-    testCompileOnly group: 'org.springframework', name: 'spring-context-support', version: versions.spring
-    compileOnly group: 'org.springframework', name: 'spring-tx', version: versions.spring
-    testCompileOnly group: 'org.springframework', name: 'spring-tx', version: versions.spring
+    compileOnly group: 'org.springframework', name: 'spring-context-support', version: spring_version
+    testCompileOnly group: 'org.springframework', name: 'spring-context-support', version: spring_version
+    compileOnly group: 'org.springframework', name: 'spring-tx', version: spring_version
+    testCompileOnly group: 'org.springframework', name: 'spring-tx', version: spring_version
 
-    compileOnly group: 'org.springframework', name: 'spring-web', version: versions.spring
-    testCompileOnly group: 'org.springframework', name: 'spring-web', version: versions.spring
-    compileOnly group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
-    testCompileOnly group: 'org.springframework', name: 'spring-webmvc', version: versions.spring
+    compileOnly group: 'org.springframework', name: 'spring-web', version: spring_version
+    testCompileOnly group: 'org.springframework', name: 'spring-web', version: spring_version
+    compileOnly group: 'org.springframework', name: 'spring-webmvc', version: spring_version
+    testCompileOnly group: 'org.springframework', name: 'spring-webmvc', version: spring_version
 
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
-    testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: versions.servlet
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: servlet_version
+    testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: servlet_version
 
     // commons-lang3
-    compileOnly group: 'org.apache.commons', name: 'commons-lang3', version: versions.apache_commons_lang3
-    testCompileOnly group: 'org.apache.commons', name: 'commons-lang3', version: versions.apache_commons_lang3
+    compileOnly group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
+    testCompileOnly group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
 
     // commons-collections4
-    compileOnly group: 'org.apache.commons', name: 'commons-collections4', version: versions.apache_commons_collections
-    testCompileOnly group: 'org.apache.commons', name: 'commons-collections4', version: versions.apache_commons_collections
+    compileOnly group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections_version
+    testCompileOnly group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections_version
 
     // logback
-    compileOnly group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
-    testCompileOnly group: 'ch.qos.logback', name: 'logback-core', version: versions.logback
+    compileOnly group: 'ch.qos.logback', name: 'logback-core', version: logback_version
+    testCompileOnly group: 'ch.qos.logback', name: 'logback-core', version: logback_version
 
-    compileOnly group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
-    testCompileOnly group: 'ch.qos.logback', name: 'logback-classic', version: versions.logback
+    compileOnly group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
+    testCompileOnly group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
 
     // guava
-    compileOnly group: 'com.google.guava', name: 'guava', version: versions.google_guava
-    testCompileOnly group: 'com.google.guava', name: 'guava', version: versions.google_guava
+    compileOnly group: 'com.google.guava', name: 'guava', version: google_guava_version
+    testCompileOnly group: 'com.google.guava', name: 'guava', version: google_guava_version
 
-    // mariadb
-    // api group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: versions.mariadb
-
-    testImplementation group: 'junit', name: 'junit', version: versions.junit
+    testImplementation group: 'junit', name: 'junit', version: junit_version
 
     // lombok
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
-    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
 
-    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: versions.lombok
-    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: versions.lombok
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
 
   }
 
-  // 实时更新 snapshots
-  configurations.all {
-    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
-    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
-  }
+  [compileJava, compileTestJava, javadoc]*.options*.encoding = charset
 
   sourceSets {
     main {
@@ -121,6 +78,59 @@ allprojects {
 
   test {
     exclude '**/*Test*.class'
+  }
+
+  java {
+    withJavadocJar()
+    withSourcesJar()
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(jdk_version)
+      vendor = JvmVendorSpec.ADOPTOPENJDK
+      implementation = JvmImplementation.J9
+    }
+  }
+
+  jar {
+    enabled = true
+    into("META-INF/resources") {
+      from("src/main/webapp")
+    }
+  }
+
+  idea {
+    module {
+      downloadJavadoc = false
+      downloadSources = false
+    }
+  }
+
+  repositories {
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+
+      maven {
+        url 'https://maven.aliyun.com/repository/public'
+      }
+      maven {
+        credentials {
+          username aliyunPackagesUsername
+          password aliyunPackagesPassword
+        }
+        url 'https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu'
+      }
+      maven {
+        credentials {
+          username aliyunPackagesUsername
+          password aliyunPackagesPassword
+        }
+        url 'https://packages.aliyun.com/maven/repository/2011805-release-MMUG60'
+      }
+    } else {
+
+      mavenCentral()
+      maven {
+        url 'https://oss.sonatype.org/content/groups/public/'
+      }
+    }
   }
 
   publishing {
@@ -154,7 +164,6 @@ allprojects {
             developerConnection = "scm:git:ssh://git@github.com:cc332030/${rootProject.name}.git"
             url = "https://github.com/cc332030/${rootProject.name}"
           }
-
         }
       }
 
