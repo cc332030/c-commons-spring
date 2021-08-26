@@ -52,8 +52,8 @@ allprojects {
     testCompileOnly group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
 
     // guava
-    compileOnly group: 'com.google.guava', name: 'guava', version: google_guava_version
-    testCompileOnly group: 'com.google.guava', name: 'guava', version: google_guava_version
+    compileOnly group: 'com.google.guava', name: 'guava', version: guava_version
+    testCompileOnly group: 'com.google.guava', name: 'guava', version: guava_version
 
     testImplementation group: 'junit', name: 'junit', version: junit_version
 
@@ -102,6 +102,12 @@ allprojects {
       downloadJavadoc = false
       downloadSources = false
     }
+  }
+
+  // 实时更新 snapshots
+  configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
+    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
   }
 
   repositories {
