@@ -34,11 +34,11 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
       <springProfile name="default,dev">
-        <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.name.default}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+        <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.name.default}.log.gz-%d{yyyy-MM-dd}.%i</fileNamePattern>
       </springProfile>
 
       <springProfile name="test,prod">
-        <fileNamePattern>${logging.file.path}/${logging.name.default}-%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+        <fileNamePattern>${logging.file.path}/${logging.name.default}.log.gz-%d{yyyy-MM-dd}.%i</fileNamePattern>
       </springProfile>
 
       <maxHistory>${logging.file.max-history}</maxHistory>
