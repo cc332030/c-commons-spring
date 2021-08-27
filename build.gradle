@@ -97,10 +97,10 @@ allprojects {
   }
 
   // 实时更新 snapshots
-  configurations.all {
-    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
-    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
-  }
+//  configurations.all {
+//    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
+//    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
+//  }
 
   repositories {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
