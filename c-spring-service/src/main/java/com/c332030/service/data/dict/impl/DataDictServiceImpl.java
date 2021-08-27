@@ -14,6 +14,7 @@ import org.reflections.Reflections;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
+
 import lombok.Data;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ import com.c332030.constant.enumerable.data.IDataDictEnum;
 import com.c332030.model.sys.KeyValue;
 import com.c332030.service.SpringBaseService;
 import com.c332030.service.data.dict.IDataDictService;
-import com.c332030.util.data.JSONUtils;
+import com.c332030.util.data.JsonUtils;
 
 /**
  * <p>
@@ -92,7 +93,7 @@ public class DataDictServiceImpl extends SpringBaseService implements IDataDictS
             dataDictMap = dataDictBuilder.build();
             keyValues = keyValuesBuilder.build();
 
-            keyValueJson = JSONUtils.toJson(keyValues);
+            keyValueJson = JsonUtils.toJson(keyValues);
         }
 
         /**
