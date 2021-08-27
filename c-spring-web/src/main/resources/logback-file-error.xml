@@ -35,7 +35,6 @@
 
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 
-
       <springProfile name="default,dev">
         <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.name.error}.log.gz-%d{yyyy-MM-dd}.%i</fileNamePattern>
       </springProfile>
