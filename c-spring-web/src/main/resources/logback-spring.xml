@@ -28,9 +28,6 @@
   <!--  <appender-ref ref="ERROR_FILE_ASYNC"/>-->
   <!--</root>-->
 
-  <logger name="org.springframework" level="info" />
-
-  <logger name="org.eclipse.jetty" level="info" />
-  <logger name="io.netty" level="info" />
+  <!--<logger name="org.springframework" level="info" />-->
 
 </configuration>
