@@ -75,11 +75,6 @@ allprojects {
   java {
     withJavadocJar()
     withSourcesJar()
-    toolchain {
-      languageVersion = JavaLanguageVersion.of(jdk_version)
-      vendor = JvmVendorSpec.ADOPTOPENJDK
-      implementation = JvmImplementation.J9
-    }
   }
 
   jar {
@@ -103,12 +98,6 @@ allprojects {
       signTag = true
     }
   }
-
-  // 实时更新 snapshots
-//  configurations.all {
-//    resolutionStrategy.cacheDynamicVersionsFor 1, 'seconds'
-//    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
-//  }
 
   repositories {
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {

@@ -1,0 +1,20 @@
+
+name: publish
+
+on: [push, pull_request]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cc332030/gradle-publish-action@v0.0.1
+        timeout-minutes: 30
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
+          OSSRH_USERNAME: ${{ secrets.USER }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          GRADLE_GNUPG_COMMAND: ${{ secrets.GRADLEW }} publish
