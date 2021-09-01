@@ -75,6 +75,11 @@ allprojects {
   java {
     withJavadocJar()
     withSourcesJar()
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(jdk_version)
+      vendor = JvmVendorSpec.ADOPTOPENJDK
+      implementation = JvmImplementation.J9
+    }
   }
 
   jar {
