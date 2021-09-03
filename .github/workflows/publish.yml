@@ -11,7 +11,6 @@ jobs:
       - uses: cc332030/gradle-publish-action@v0.0.1
         timeout-minutes: 30
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
           GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
