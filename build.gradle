@@ -5,6 +5,8 @@ plugins {
   id 'net.researchgate.release' version '2.8.1'
 }
 
+def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
+
 allprojects {
 
   apply plugin: 'java-library'
@@ -110,24 +112,24 @@ allprojects {
 //  }
 
   repositories {
-    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+    if (isWindows) {
 
       maven {
         url 'https://maven.aliyun.com/repository/public'
       }
       maven {
+        url 'https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu'
         credentials {
           username aliyunPackagesUsername
           password aliyunPackagesPassword
         }
-        url 'https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu'
       }
       maven {
+        url 'https://packages.aliyun.com/maven/repository/2011805-release-MMUG60'
         credentials {
           username aliyunPackagesUsername
           password aliyunPackagesPassword
         }
-        url 'https://packages.aliyun.com/maven/repository/2011805-release-MMUG60'
       }
     } else {
 
@@ -179,21 +181,40 @@ allprojects {
 
     repositories {
 
-      maven {
-        def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-        def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-        url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+      if (isWindows) {
 
-        credentials {
-          username ossrhUsername
-          password ossrhPassword
+        maven {
+
+          def releasesRepoUrl = "https://packages.aliyun.com/maven/repository/2011805-release-MMUG60"
+          def snapshotsRepoUrl = "https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu"
+          url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+          credentials {
+            username aliyunPackagesUsername
+            password aliyunPackagesPassword
+          }
+        }
+      } else {
+
+        maven {
+
+          def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+          def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+          url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+          credentials {
+            username ossrhUsername
+            password ossrhPassword
+          }
         }
       }
     }
   }
 
-  signing {
-    sign publishing.publications
+  if (!isWindows) {
+    signing {
+      sign publishing.publications
+    }
   }
 
 }
