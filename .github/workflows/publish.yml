@@ -8,13 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          key: gradle_docker
-          path: |
-            /home/runner/work/_temp/_github_home/.gradle/wrapper
-            /home/runner/work/_temp/_github_home/.gradle/jdks
-            /home/runner/work/_temp/_github_home/.gradle/caches
       - uses: cc332030/gradle-publish-action@v0.0.1
         timeout-minutes: 30
         env:
