@@ -5,6 +5,7 @@ plugins {
   id 'net.researchgate.release' version '2.8.1'
 }
 
+def isSnapshot = version.endsWith('SNAPSHOT')
 def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
 
 allprojects {
@@ -187,7 +188,7 @@ allprojects {
 
           def releasesRepoUrl = "https://packages.aliyun.com/maven/repository/2011805-release-MMUG60"
           def snapshotsRepoUrl = "https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu"
-          url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+          url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
 
           credentials {
             username aliyunPackagesUsername
@@ -200,7 +201,7 @@ allprojects {
 
           def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
           def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-          url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+          url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
 
           credentials {
             username ossrhUsername
@@ -211,7 +212,7 @@ allprojects {
     }
   }
 
-  if (!isWindows) {
+  if (!isWindows && !isSnapshot) {
     signing {
       sign publishing.publications
     }
