@@ -8,44 +8,38 @@
 
 <included>
 
-  <springProperty scope="context" name="logging.name.default" source="logging.level.root"/>
-
-  <!-- 输出到文件 常规 -->
   <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 
-    <springProfile name="default,dev">
-      <file>${logging.file.path}/${spring.application.name}/${logging.name.default}.log</file>
-    </springProfile>
-
-    <springProfile name="test,prod">
-      <file>${logging.file.path}/${logging.name.default}.log</file>
-    </springProfile>
-
-    <!-- 过滤低于此级别的记录 -->
-    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-      <level>${logging.level.root}</level>
-    </filter>
+    <if condition='property("os.name").startsWith("Windows")'>
+      <then>
+        <file>${logging.file.path}/${spring.application.name}/${logging.name.default}.log</file>
+      </then>
+    </if>
+    <if condition='!property("os.name").startsWith("Windows")'>
+      <then>
+        <file>${logging.file.path}/${logging.name.default}.log</file>
+      </then>
+    </if>
 
     <encoder>
       <pattern>${logging.pattern}</pattern>
       <charset>${logging.charset}</charset>
     </encoder>
 
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-
-      <springProfile name="default,dev">
-        <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.name.default}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-      </springProfile>
-
-      <springProfile name="test,prod">
-        <fileNamePattern>${logging.file.path}/${logging.name.default}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-      </springProfile>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <if condition='property("os.name").startsWith("Windows")'>
+        <then>
+          <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.name.default}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+        </then>
+      </if>
+      <if condition='!property("os.name").startsWith("Windows")'>
+        <then>
+          <fileNamePattern>${logging.file.path}/${logging.name.default}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+        </then>
+      </if>
 
       <maxHistory>${logging.file.max-history}</maxHistory>
-
-      <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-        <maxFileSize>${logging.file.max-size}</maxFileSize>
-      </timeBasedFileNamingAndTriggeringPolicy>
+      <maxFileSize>${logging.file.max-size}</maxFileSize>
 
     </rollingPolicy>
 

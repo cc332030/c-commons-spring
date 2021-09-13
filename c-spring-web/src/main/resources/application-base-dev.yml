@@ -4,7 +4,3 @@ spring:
     include:
       - windows
       - log-file
-
-logging:
-  level:
-    root: debug

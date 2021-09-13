@@ -11,23 +11,22 @@
   <property name="logging.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{64} - %msg%n" />
   <property name="logging.charset" value="utf-8" />
 
-  <springProfile name="default,dev">
-    <include resource="logback-console.xml" />
-    <include resource="logback-file.xml" />
-    <include resource="logback-file-error.xml" />
-  </springProfile>
+  <property name="logging.name.default" value="default" />
+  <property name="logging.name.error" value="error" />
 
-  <springProfile name="test,prod">
-    <include resource="logback-file.xml" />
-    <include resource="logback-file-error.xml" />
-  </springProfile>
+  <if condition='property("os.name").startsWith("Windows")'>
+    <then>
+      <include resource="logback-console.xml" />
+    </then>
+  </if>
+
+  <include resource="logback-file.xml" />
+  <include resource="logback-file-error.xml" />
 
   <!-- additivity 不能在这用 -->
   <!--<root level="${logging.level.root}">-->
   <!--  <appender-ref ref="DEFAULT_FILE_ASYNC"/>-->
   <!--  <appender-ref ref="ERROR_FILE_ASYNC"/>-->
   <!--</root>-->
-
-  <!--<logger name="org.springframework" level="info" />-->
 
 </configuration>
