@@ -7,6 +7,12 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/jdks
+            ~/.gradle/caches
+            ~/.gradle/wrapper
       - uses: actions/checkout@v2
       - uses: cc332030/gradle-publish-action@v0.0.1
         timeout-minutes: 30
