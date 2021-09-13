@@ -11,9 +11,9 @@ jobs:
         with:
           key: gradle
           path: |
-            ~/.gradle/jdks
-            ~/.gradle/wrapper
-            ~/.gradle/caches
+            $GRADLE_USER_HOME/jdks
+            $GRADLE_USER_HOME/wrapper
+            $GRADLE_USER_HOME/caches
       - uses: actions/checkout@v2
       - uses: cc332030/gradle-publish-action@v0.0.1
         timeout-minutes: 30
