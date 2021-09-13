@@ -9,6 +9,7 @@ jobs:
     steps:
       - uses: actions/cache@v2
         with:
+          key: gradle
           path: |
             ~/.gradle/jdks
             ~/.gradle/caches
