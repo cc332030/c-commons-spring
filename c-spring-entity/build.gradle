@@ -1,7 +1,7 @@
 
 dependencies {
 
-  api group: 'com.c332030.mybatis', name: 'c-mybatis-entity', version: libs.versions.c.commons.mybatis
+  api group: 'com.c332030', name: 'c-mybatis-entity', version: libs.versions.c.commons.mybatis.get()
 
   api project(':c-spring-constant')
 

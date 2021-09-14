@@ -5,7 +5,4 @@ dependencies {
 
     api project(':c-spring-task:c-spring-task-dao')
 
-    compileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
-    testCompileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
-
 }

@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
 
-    api group: 'com.c332030.commons', name: 'c-commons-service', version: libs.versions.c.commons.mybatis
+    api group: 'com.c332030', name: 'c-commons-service', version: libs.versions.c.commons.mybatis.get()
 
     api project(':c-spring-dao')
 

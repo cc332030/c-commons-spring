@@ -1,6 +1,7 @@
+
 buildscript {
   dependencies {
-    classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.5.4')
+    classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: libs.versions.spring.boot.get())
   }
 }
 
@@ -56,6 +57,5 @@ allprojects {
 
   apply from: "${rootProject.projectDir}/java.gradle"
   apply from: "${rootProject.projectDir}/publish.gradle"
-
 
 }

@@ -43,6 +43,8 @@ def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
 
 dependencyResolutionManagement {
 
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+
   repositories {
 
     mavenLocal()
