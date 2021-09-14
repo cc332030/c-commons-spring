@@ -12,12 +12,12 @@
 
     <if condition='property("os.name").startsWith("Windows")'>
       <then>
-        <file>${logging.file.path}/${spring.application.name}/${logging.name.default}.log</file>
+        <file>${logging.file.path}/${spring.application.name}/${logging.level.root}.log</file>
       </then>
     </if>
     <if condition='!property("os.name").startsWith("Windows")'>
       <then>
-        <file>${logging.file.path}/${logging.name.default}.log</file>
+        <file>${logging.file.path}/${logging.level.root}.log</file>
       </then>
     </if>
 
@@ -29,12 +29,12 @@
     <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
       <if condition='property("os.name").startsWith("Windows")'>
         <then>
-          <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.name.default}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+          <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.level.root}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
         </then>
       </if>
       <if condition='!property("os.name").startsWith("Windows")'>
         <then>
-          <fileNamePattern>${logging.file.path}/${logging.name.default}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
+          <fileNamePattern>${logging.file.path}/${logging.level.root}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
         </then>
       </if>
 
