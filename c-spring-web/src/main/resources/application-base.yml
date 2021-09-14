@@ -1,15 +1,8 @@
 
 spring:
-  profiles:
-    include:
-      - base-dao
-      - base-service
-
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-
-  http:
-#    打印请求参数
+  mvc:
     log-request-details: true
 
 logging:

@@ -6,7 +6,7 @@
   <springProperty scope="context" name="spring.application.name" source="spring.application.name"/>
 
   <springProperty scope="context" name="logging.file.path" source="logging.file.path"/>
-  <springProperty scope="context" name="logging.file.max-size" source="logging.file.max-size"/>
+  <springProperty scope="context" name="logging.file.max-size" source="logging.logback.rollingpolicy.max-file-size"/>
 
   <property name="logging.pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{64} - %msg%n" />
   <property name="logging.charset" value="utf-8" />
