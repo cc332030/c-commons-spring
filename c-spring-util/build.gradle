@@ -1,6 +1,8 @@
 
 dependencies {
 
+  api libs.okhttp
+
   api group: 'com.c332030', name: 'c-web-servlet-util', version: libs.versions.c.commons.web.get()
 
   api project(':c-spring-model')
