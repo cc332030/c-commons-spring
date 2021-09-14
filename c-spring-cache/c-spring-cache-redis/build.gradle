@@ -1,7 +1,8 @@
 
 dependencies {
 
-  compileOnly group: 'org.springframework.data', name: 'spring-data-redis', version: spring_data_redis_version
+  compileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis'
+  testCompileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis'
 
   api project(':c-spring-cache:c-spring-cache-base')
 

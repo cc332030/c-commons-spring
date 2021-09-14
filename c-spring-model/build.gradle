@@ -1,7 +1,7 @@
 
 dependencies {
 
-    api group: 'com.c332030.mybatis', name: 'c-mybatis-model', version: c_commons_mybatis_version
+    api group: 'com.c332030.mybatis', name: 'c-mybatis-model', version: libs.versions.c.commons.mybatis
 
     api project(':c-spring-entity')
 

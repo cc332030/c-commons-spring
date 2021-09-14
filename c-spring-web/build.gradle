@@ -1,10 +1,10 @@
 
 dependencies {
 
-    implementation group: 'org.codehaus.janino', name: 'janino', version: janino_version
+    implementation libs.janino
 
     api project(':c-spring-service')
 
-    api group: 'com.c332030', name: 'c-web-filter-provider', version: c_commons_web_version
+    api group: 'com.c332030', name: 'c-web-filter-provider', version: libs.versions.c.commons.web
 
 }

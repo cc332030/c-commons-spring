@@ -4,12 +4,13 @@ plugins {
 
 dependencies {
 
-    api group: 'com.c332030.commons', name: 'c-commons-service', version: c_commons_mybatis_version
+    api group: 'com.c332030.commons', name: 'c-commons-service', version: libs.versions.c.commons.mybatis
 
     api project(':c-spring-dao')
 
     api project(':c-spring-util')
 
-    compileOnly group: 'org.reflections', name: 'reflections', version: reflections_version
+    compileOnly group: 'org.reflections', name: 'reflections'
+    testCompileOnly group: 'org.reflections', name: 'reflections'
 
 }

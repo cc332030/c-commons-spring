@@ -1,110 +1,52 @@
-
-import org.apache.tools.ant.taskdefs.condition.Os
+buildscript {
+  dependencies {
+    classpath(group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.5.4')
+  }
+}
 
 plugins {
   id 'net.researchgate.release' version '2.8.1'
 }
 
-def isSnapshot = version.endsWith('SNAPSHOT')
-def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
-
 allprojects {
 
   apply plugin: 'java-library'
+  apply plugin: 'org.springframework.boot'
+  apply plugin: 'io.spring.dependency-management'
   apply plugin: 'idea'
   apply plugin: 'maven-publish'
   apply plugin: 'signing'
 
   dependencies {
 
-    compileOnly group: 'org.springframework', name: 'spring-core', version: spring_version
-    testCompileOnly group: 'org.springframework', name: 'spring-core', version: spring_version
-    compileOnly group: 'org.springframework', name: 'spring-beans', version: spring_version
-    testCompileOnly group: 'org.springframework', name: 'spring-beans', version: spring_version
-    compileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
-    testCompileOnly group: 'org.springframework', name: 'spring-context', version: spring_version
-    compileOnly group: 'org.springframework', name: 'spring-aop', version: spring_version
-    testCompileOnly group: 'org.springframework', name: 'spring-aop', version: spring_version
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    testCompileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-web'
 
-    compileOnly group: 'org.springframework', name: 'spring-context-support', version: spring_version
-    testCompileOnly group: 'org.springframework', name: 'spring-context-support', version: spring_version
-    compileOnly group: 'org.springframework', name: 'spring-tx', version: spring_version
-    testCompileOnly group: 'org.springframework', name: 'spring-tx', version: spring_version
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 
-    compileOnly group: 'org.springframework', name: 'spring-web', version: spring_version
-    testCompileOnly group: 'org.springframework', name: 'spring-web', version: spring_version
-    compileOnly group: 'org.springframework', name: 'spring-webmvc', version: spring_version
-    testCompileOnly group: 'org.springframework', name: 'spring-webmvc', version: spring_version
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api'
+    testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api'
 
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: servlet_version
-    testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: servlet_version
+    compileOnly group: 'org.apache.commons', name: 'commons-lang3'
+    testCompileOnly group: 'org.apache.commons', name: 'commons-lang3'
 
-    // commons-lang3
-    compileOnly group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
-    testCompileOnly group: 'org.apache.commons', name: 'commons-lang3', version: commons_lang_version
+    compileOnly libs.commons.collections
+    testCompileOnly libs.commons.collections
 
-    // commons-collections4
-    compileOnly group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections_version
-    testCompileOnly group: 'org.apache.commons', name: 'commons-collections4', version: commons_collections_version
-
-    // logback
-    compileOnly group: 'ch.qos.logback', name: 'logback-core', version: logback_version
-    testCompileOnly group: 'ch.qos.logback', name: 'logback-core', version: logback_version
-
-    compileOnly group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
-    testCompileOnly group: 'ch.qos.logback', name: 'logback-classic', version: logback_version
+    compileOnly group: 'ch.qos.logback', name: 'logback-classic'
+    testCompileOnly group: 'ch.qos.logback', name: 'logback-classic'
 
     // guava
-    compileOnly group: 'com.google.guava', name: 'guava', version: guava_version
-    testCompileOnly group: 'com.google.guava', name: 'guava', version: guava_version
-
-    testImplementation group: 'junit', name: 'junit', version: junit_version
+    compileOnly libs.guava
+    testCompileOnly libs.guava
 
     // lombok
-    compileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
-    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
 
-    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombok_version
-    testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
 
-  }
-
-  [compileJava, compileTestJava, javadoc]*.options*.encoding = charset
-
-  test {
-    exclude '**/*Test*.class'
-  }
-
-  java {
-    withJavadocJar()
-    withSourcesJar()
-    toolchain {
-      languageVersion = JavaLanguageVersion.of(jdk_version)
-      vendor = JvmVendorSpec.ADOPTOPENJDK
-      implementation = JvmImplementation.J9
-    }
-  }
-
-  jar {
-    enabled = true
-    into("META-INF/resources") {
-      from("src/main/webapp")
-    }
-  }
-
-  idea {
-    module {
-      downloadJavadoc = false
-      downloadSources = false
-    }
-  }
-
-  release {
-    git {
-      requireBranch = 'main'
-      pushToRemote = 'origin'
-      signTag = true
-    }
   }
 
 //  configurations.all {
@@ -112,110 +54,8 @@ allprojects {
 //    resolutionStrategy.cacheChangingModulesFor 1, 'seconds'
 //  }
 
-  repositories {
-    if (isWindows) {
+  apply from: "${rootProject.projectDir}/java.gradle"
+  apply from: "${rootProject.projectDir}/publish.gradle"
 
-      maven {
-        url 'https://maven.aliyun.com/repository/public'
-      }
-      maven {
-        url 'https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu'
-        credentials {
-          username aliyunPackagesUsername
-          password aliyunPackagesPassword
-        }
-      }
-      maven {
-        url 'https://packages.aliyun.com/maven/repository/2011805-release-MMUG60'
-        credentials {
-          username aliyunPackagesUsername
-          password aliyunPackagesPassword
-        }
-      }
-    } else {
-
-      mavenCentral()
-      maven {
-        url 'https://oss.sonatype.org/content/repositories/snapshots/'
-      }
-      maven {
-        url 'https://oss.sonatype.org/service/local/repositories/releases/content/'
-      }
-    }
-  }
-
-  publishing {
-
-    publications {
-
-      mavenJava(MavenPublication) {
-
-        from components.java
-
-        pom {
-
-          name = 'c-commons-java'
-          description = 'Java commons library'
-          url = "https://github.com/cc332030/${rootProject.name}"
-          licenses {
-            license {
-              name = 'The Apache License, Version 2.0'
-              url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-            }
-          }
-          developers {
-            developer {
-              id = 'c332030'
-              name = 'c332030'
-              email = 'c332030@gmail.com'
-            }
-          }
-          scm {
-            connection = "scm:git:git://git@github.com:cc332030/${rootProject.name}.git"
-            developerConnection = "scm:git:ssh://git@github.com:cc332030/${rootProject.name}.git"
-            url = "https://github.com/cc332030/${rootProject.name}"
-          }
-        }
-      }
-
-    }
-
-    repositories {
-
-      if (isWindows) {
-
-        maven {
-
-          def releasesRepoUrl = "https://packages.aliyun.com/maven/repository/2011805-release-MMUG60"
-          def snapshotsRepoUrl = "https://packages.aliyun.com/maven/repository/2011805-snapshot-nunUNu"
-          url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
-
-          credentials {
-            username aliyunPackagesUsername
-            password aliyunPackagesPassword
-          }
-        }
-      } else {
-
-        maven {
-
-          def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
-          def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-          url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
-
-          credentials {
-            username ossrhUsername
-            password ossrhPassword
-          }
-        }
-      }
-    }
-  }
-
-  if (!isWindows && !isSnapshot) {
-    signing {
-      sign publishing.publications
-    }
-  }
 
 }

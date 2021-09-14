@@ -1,0 +1,74 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+def isSnapshot = version.endsWith("SNAPSHOT")
+def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
+
+release {
+  git {
+    requireBranch = 'main'
+    pushToRemote = 'origin'
+    signTag = true
+  }
+}
+
+publishing {
+  publications {
+
+    mavenJava(MavenPublication) {
+
+      from components.java
+
+      pom {
+
+        name = 'c-commons-java'
+        description = 'Java commons library'
+        url = "https://github.com/cc332030/${rootProject.name}"
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id = 'c332030'
+            name = 'c332030'
+            email = 'c332030@gmail.com'
+          }
+        }
+        scm {
+          connection = "scm:git:git://git@github.com:cc332030/${rootProject.name}.git"
+          developerConnection = "scm:git:ssh://git@github.com:cc332030/${rootProject.name}.git"
+          url = "https://github.com/cc332030/${rootProject.name}"
+        }
+
+      }
+    }
+
+  }
+
+  repositories {
+
+    def snapshotsRepoUrl = isWindows ? repoSnapshotAliyun : repoSnapshotSonatype
+    def releasesRepoUrl = isWindows ? repoReleaseAliyun : repoStageSonatype
+
+    def publishUsername = isWindows ? aliyunPackagesUsername : ossrhUsername
+    def publishPassword = isWindows ? aliyunPackagesPassword : ossrhPassword
+
+    maven {
+
+      url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
+      credentials {
+        username publishUsername
+        password publishPassword
+      }
+    }
+  }
+
+}
+
+if(!isWindows && !isSnapshot) {
+  signing {
+    sign publishing.publications
+  }
+}

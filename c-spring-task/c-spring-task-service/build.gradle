@@ -5,6 +5,7 @@ dependencies {
 
     api project(':c-spring-task:c-spring-task-dao')
 
-    api group: 'org.quartz-scheduler', name: 'quartz', version: quartz_version
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
+    testCompileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
 
 }

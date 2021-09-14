@@ -33,3 +33,54 @@ include 'c-spring-task:c-spring-task-model'
 include 'c-spring-task:c-spring-task-dao'
 include 'c-spring-task:c-spring-task-service'
 include 'c-spring-task:c-spring-task-web'
+
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+enableFeaturePreview('VERSION_CATALOGS')
+
+def isWindows = Os.isFamily(Os.FAMILY_WINDOWS)
+
+dependencyResolutionManagement {
+
+  repositories {
+
+    mavenLocal()
+
+    if (isWindows) {
+
+      maven {
+        url "https://maven.aliyun.com/repository/public"
+      }
+      maven {
+        url repoReleaseAliyun
+        credentials {
+          username aliyunPackagesUsername
+          password aliyunPackagesPassword
+        }
+      }
+      maven {
+        url repoSnapshotAliyun
+        credentials {
+          username aliyunPackagesUsername
+          password aliyunPackagesPassword
+        }
+      }
+    } else {
+
+      mavenCentral()
+      maven {
+        url repoSnapshotSonatype
+      }
+      maven {
+        url repoReleaseSonatype
+      }
+    }
+  }
+
+  versionCatalogs {
+    libs {
+      from("com.c332030:c-commons-catalog:1.0.0-SNAPSHOT")
+    }
+  }
+}
