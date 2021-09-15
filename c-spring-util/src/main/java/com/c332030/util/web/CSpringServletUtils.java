@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 
 /**
  * <p>
- * Description: SpringServletUtils
+ * Description: CSpringServletUtils
  * </p>
  *
  * @author c332030
  * @version 1.0
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class SpringServletUtils {
+public class CSpringServletUtils {
 
     /**
      * 获取 ServletRequestAttributes
