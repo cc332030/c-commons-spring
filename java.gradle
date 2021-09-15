@@ -9,9 +9,7 @@ test {
 
 java {
 
-  if(!isSnapshot) {
-    withJavadocJar()
-  }
+  withJavadocJar()
   withSourcesJar()
   toolchain {
     languageVersion = JavaLanguageVersion.of(jdk_version)
