@@ -2,18 +2,27 @@ package com.c332030.util.comm;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
+
+import org.springframework.util.MultiValueMap;
+
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.OkHttp3ClientHttpRequestFactory;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
-import org.springframework.util.MultiValueMap;
+
 import org.springframework.web.client.RestTemplate;
+
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import com.c332030.util.collection.CSpringMapUtils;
 import com.c332030.util.data.GsonUtils;
 import com.c332030.util.data.JsonUtils;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -65,17 +74,43 @@ public class RestTemplateUtils {
 
     public static final String CONTENT_TYPE_JSON_WITH_UTF8 = MediaType.APPLICATION_JSON_VALUE + ";charset=utf-8";
 
+    /**
+     * <p>
+     * Description: init HttpHeaders for Json
+     * </p>
+     *
+     * @param headers HttpHeaders Object
+     * @return org.springframework.http.HttpHeaders
+     * @author c332030
+     */
     public static HttpHeaders initJsonHttpHeaders(HttpHeaders headers) {
         headers.set(HttpHeaders.CONTENT_TYPE, CONTENT_TYPE_JSON_WITH_UTF8);
         return headers;
     }
 
+    /**
+     * <p>
+     * Description: get HttpHeaders for Json
+     * </p>
+     *
+     * @return org.springframework.http.HttpHeaders
+     * @author c332030
+     */
     public static HttpHeaders getJsonHttpHeaders() {
         return initJsonHttpHeaders(new HttpHeaders());
     }
 
+    /**
+     * <p>
+     * Description: default HttpHeaders
+     * </p>
+     *
+     * @param httpHeaders HttpHeaders
+     * @return org.springframework.http.HttpHeaders
+     * @author c332030
+     */
     public static HttpHeaders dealHttpHeaders(HttpHeaders httpHeaders) {
-        return null != httpHeaders ? httpHeaders : HttpHeaders.EMPTY;
+        return ObjectUtils.defaultIfNull(httpHeaders, HttpHeaders.EMPTY);
     }
 
     /**
@@ -83,7 +118,12 @@ public class RestTemplateUtils {
      * Description: get http headers for post json request
      * </p>
      *
-     * @return HttpHeaders for post json
+     * @param url url
+     * @param requestBody requestBody
+     * @param tClass result Class
+     * @param httpHeaders httpHeaders
+     * @param <T> response entity
+     * @return http result
      * @author c332030
      */
     public static <T> T post(String url, Object requestBody, Class<T> tClass, HttpHeaders httpHeaders) {
@@ -98,16 +138,30 @@ public class RestTemplateUtils {
      * </p>
      *
      * @param url url
-     * @param requestBody request body
+     * @param requestBody request requestBody
      * @param tClass response entity class
      * @param <T> response entity
-     * @return response body
+     * @return response requestBody
      * @author c332030
      */
     public static <T> T post(String url, Object requestBody, Class<T> tClass) {
         return post(url, requestBody, tClass, null);
     }
 
+    /**
+     * <p>
+     * Description: request exchange
+     * </p>
+     *
+     * @param url url
+     * @param method request method
+     * @param requestBody requestBody
+     * @param typeReference response type
+     * @param httpHeaders httpHeaders
+     * @param <T> response entity
+     * @return response requestBody
+     * @author c332030
+     */
     public static <T> T exchange(String url, HttpMethod method, Object requestBody,
                                  ParameterizedTypeReference<T> typeReference, HttpHeaders httpHeaders) {
         return REST_TEMPLATE.exchange(url, method,
@@ -115,11 +169,37 @@ public class RestTemplateUtils {
         ).getBody();
     }
 
+    /**
+     * <p>
+     * Description: request exchange
+     * </p>
+     *
+     * @param url url
+     * @param method request method
+     * @param requestBody requestBody
+     * @param typeReference response type
+     * @param <T> response entity
+     * @return response requestBody
+     * @author c332030
+     */
     public static <T> T exchange(String url, HttpMethod method, Object requestBody,
                                      ParameterizedTypeReference<T> typeReference) {
         return exchange(url, method, requestBody, typeReference, null);
     }
 
+    /**
+     * <p>
+     * Description: request exchange
+     * </p>
+     *
+     * @param url url
+     * @param requestBody requestBody
+     * @param typeReference response type
+     * @param httpHeaders httpHeaders
+     * @param <T> response entity
+     * @return response requestBody
+     * @author c332030
+     */
     public static <T> T postExchange(String url, Object requestBody,
                                      ParameterizedTypeReference<T> typeReference,
                                      HttpHeaders httpHeaders) {
@@ -132,11 +212,11 @@ public class RestTemplateUtils {
      * </p>
      *
      * @param url url
-     * @param requestBody request body
+     * @param requestBody request requestBody
      * @param tClass response entity class
      * @param httpHeaders http headers
      * @param <T> response entity
-     * @return response body
+     * @return response requestBody
      * @author c332030
      */
     public static <T> T postForForm(String url, MultiValueMap<String, Object> requestBody,
@@ -150,16 +230,55 @@ public class RestTemplateUtils {
         return post(url, requestBody, tClass, httpHeaders);
     }
 
+    /**
+     * <p>
+     * Description: post request for form
+     * </p>
+     *
+     * @param url url
+     * @param requestBody request requestBody
+     * @param tClass response entity class
+     * @param httpHeaders http headers
+     * @param <T> response entity
+     * @return response requestBody
+     * @author c332030
+     */
     public static <T> T postForForm(String url, MultiValueMap<String, Object> requestBody,
                                     Class<T> tClass, Map<String, String> httpHeaders) {
         return postForForm(url, requestBody, tClass, CSpringMapUtils.toHttpHeaders(httpHeaders));
     }
 
+    /**
+     * <p>
+     * Description: post request for form
+     * </p>
+     *
+     * @param url url
+     * @param requestBody request requestBody
+     * @param tClass response entity class
+     * @param httpHeaders http headers
+     * @param <T> response entity
+     * @return response requestBody
+     * @author c332030
+     */
     public static <T> T postForForm(String url, Map<String, Object> requestBody,
                                     Class<T> tClass, HttpHeaders httpHeaders) {
         return postForForm(url, CSpringMapUtils.toMultiValueMap(requestBody), tClass, httpHeaders);
     }
 
+    /**
+     * <p>
+     * Description: post request for form
+     * </p>
+     *
+     * @param url url
+     * @param requestBody request requestBody
+     * @param tClass response entity class
+     * @param httpHeaders http headers
+     * @param <T> response entity
+     * @return response requestBody
+     * @author c332030
+     */
     public static <T> T postForForm(String url, Map<String, Object> requestBody,
                                     Class<T> tClass, Map<String, String> httpHeaders) {
         return postForForm(url, CSpringMapUtils.toMultiValueMap(requestBody), tClass, CSpringMapUtils.toHttpHeaders(httpHeaders));
@@ -173,6 +292,7 @@ public class RestTemplateUtils {
      * @param url 链接
      * @param requestBody 请求数据
      * @param tClass 返回类型
+     * @param <T> response entity
      * @return T
      * @author c332030
      */
@@ -188,6 +308,7 @@ public class RestTemplateUtils {
      * @param url 链接
      * @param requestBody 请求数据
      * @param tClass 返回类型
+     * @param <T> response entity
      * @return T
      * @author c332030
      */
@@ -203,6 +324,7 @@ public class RestTemplateUtils {
      * @param url 链接
      * @param requestBody 请求数据
      * @param typeReference 返回类型
+     * @param <T> response entity
      * @return T
      * @author c332030
      */
@@ -218,6 +340,7 @@ public class RestTemplateUtils {
      *
      * @param url 链接
      * @param requestBody 请求数据
+     * @param <T> response entity
      * @return T
      * @author c332030
      */
@@ -232,6 +355,7 @@ public class RestTemplateUtils {
      *
      * @param url 链接
      * @param requestBody 请求数据
+     * @param <T> response entity
      * @return T
      * @author c332030
      */
@@ -239,14 +363,38 @@ public class RestTemplateUtils {
         return postForForm(url, CSpringMapUtils.toMultiValueMap(requestBody), (Class<? extends T>) null);
     }
 
-    public static <T> T postForForm(String url, MultiValueMap<String, Object> requestMap,
+    /**
+     * <p>
+     * Description: 使用 post 方式发送 form（表单）请求，即模拟网页提交
+     * </p>
+     *
+     * @param url 链接
+     * @param requestBody 请求数据
+     * @param typeReference response type
+     * @param <T> response entity
+     * @return T
+     * @author c332030
+     */
+    public static <T> T postForForm(String url, MultiValueMap<String, Object> requestBody,
                                     ParameterizedTypeReference<T> typeReference) {
-        return postExchange(url, requestMap, typeReference, POST_JSON_HTTP_HEADERS);
+        return postExchange(url, requestBody, typeReference, POST_JSON_HTTP_HEADERS);
     }
 
-    public static <T> T postForForm(String url, Map<String, Object> requestMap,
+    /**
+     * <p>
+     * Description: 使用 post 方式发送 form（表单）请求，即模拟网页提交
+     * </p>
+     *
+     * @param url 链接
+     * @param requestBody 请求数据
+     * @param typeReference response type
+     * @param <T> response entity
+     * @return T
+     * @author c332030
+     */
+    public static <T> T postForForm(String url, Map<String, Object> requestBody,
                                     ParameterizedTypeReference<T> typeReference) {
-        return postForForm(url, CSpringMapUtils.toMultiValueMap(requestMap), typeReference);
+        return postForForm(url, CSpringMapUtils.toMultiValueMap(requestBody), typeReference);
     }
 
     /**
@@ -258,6 +406,7 @@ public class RestTemplateUtils {
      * @param requestBody 请求数据
      * @param tClass 返回类型
      * @param httpHeaders 请求头
+     * @param <T> response entity
      * @return T
      * @author c332030
      */
@@ -271,6 +420,19 @@ public class RestTemplateUtils {
         return post(url, requestBody, tClass, httpHeaders);
     }
 
+    /**
+     * <p>
+     * Description: 使用 json 方式发送请求
+     * </p>
+     *
+     * @param url 链接
+     * @param requestBody 请求数据
+     * @param tClass 返回类型
+     * @param httpHeaders 请求头
+     * @param <T> response entity
+     * @return T
+     * @author c332030
+     */
     public static <T> T postForJson(String url, String requestBody, Class<T> tClass, Map<String, String> httpHeaders) {
         return postForJson(url, requestBody, tClass, CSpringMapUtils.toHttpHeaders(httpHeaders));
     }
@@ -284,6 +446,7 @@ public class RestTemplateUtils {
      * @param requestBody 请求数据
      * @param tClass 返回类型
      * @param httpHeaders 请求头
+     * @param <T> response entity
      * @return T
      * @author c332030
      */
@@ -291,6 +454,19 @@ public class RestTemplateUtils {
         return postForJson(url, JsonUtils.toJson(requestBody), tClass, httpHeaders);
     }
 
+    /**
+     * <p>
+     * Description: 使用 json 方式发送请求
+     * </p>
+     *
+     * @param url 链接
+     * @param requestBody 请求数据
+     * @param tClass 返回类型
+     * @param httpHeaders 请求头
+     * @param <T> response entity
+     * @return T
+     * @author c332030
+     */
     public static <T> T postForJson(String url, Object requestBody, Class<T> tClass, Map<String, String> httpHeaders) {
         return postForJson(url, JsonUtils.toJson(requestBody), tClass, CSpringMapUtils.toHttpHeaders(httpHeaders));
     }
@@ -303,6 +479,7 @@ public class RestTemplateUtils {
      * @param url 链接
      * @param requestBody 请求数据
      * @param tClass 返回类型
+     * @param <T> response entity
      * @return T
      * @author c332030
      */
@@ -310,14 +487,38 @@ public class RestTemplateUtils {
         return postForJson(url, requestBody, tClass, POST_JSON_HTTP_HEADERS);
     }
 
-    public static <T> T postForJson(String url, String body,
+    /**
+     * <p>
+     * Description: 使用 json 方式发送请求
+     * </p>
+     *
+     * @param url 链接
+     * @param requestBody 请求数据
+     * @param typeReference 返回类型
+     * @param <T> response entity
+     * @return T
+     * @author c332030
+     */
+    public static <T> T postForJson(String url, String requestBody,
                                     ParameterizedTypeReference<T> typeReference) {
-        return postExchange(url, body, typeReference, POST_JSON_HTTP_HEADERS);
+        return postExchange(url, requestBody, typeReference, POST_JSON_HTTP_HEADERS);
     }
 
-    public static <T> T postForJson(String url, Object body,
+    /**
+     * <p>
+     * Description: 使用 json 方式发送请求
+     * </p>
+     *
+     * @param url 链接
+     * @param requestBody 请求数据
+     * @param typeReference 返回类型
+     * @param <T> response entity
+     * @return T
+     * @author c332030
+     */
+    public static <T> T postForJson(String url, Object requestBody,
                                     ParameterizedTypeReference<T> typeReference) {
-        return postForJson(url, JsonUtils.toJson(body), typeReference);
+        return postForJson(url, JsonUtils.toJson(requestBody), typeReference);
     }
 
     /**
@@ -326,10 +527,10 @@ public class RestTemplateUtils {
      * </p>
      *
      * @param url url
-     * @param requestBody json request body
+     * @param requestBody json request requestBody
      * @param tClass response entity class
      * @param <T> response entity
-     * @return response body
+     * @return response requestBody
      * @author c332030
      */
     public static <T> T postForJson(String url, Object requestBody, Class<T> tClass) {
