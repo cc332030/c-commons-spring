@@ -7,6 +7,7 @@ buildscript {
 
 plugins {
   id 'net.researchgate.release' version '2.8.1'
+  id 'io.codearte.nexus-staging' version '0.30.0'
 }
 
 allprojects {
@@ -58,4 +59,9 @@ allprojects {
   apply from: "${rootProject.projectDir}/java.gradle"
   apply from: "${rootProject.projectDir}/publish.gradle"
 
+}
+
+nexusStaging {
+  username ossrhUsername
+  password ossrhPassword
 }

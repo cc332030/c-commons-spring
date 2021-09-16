@@ -1,6 +1,4 @@
 
-def isSnapshot = version.endsWith("SNAPSHOT")
-
 [compileJava, compileTestJava, javadoc]*.options*.encoding = charset
 
 test {
