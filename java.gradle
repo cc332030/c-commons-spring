@@ -21,6 +21,8 @@ jar {
   into("META-INF/resources") {
     from("src/main/webapp")
   }
+
+  archiveClassifier.set('')
 }
 
 bootJar {
