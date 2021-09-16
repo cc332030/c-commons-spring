@@ -21,14 +21,14 @@ import com.c332030.constant.CharsetConstants;
 
 /**
  * <p>
- * Description: BaseController
+ * Description: AbstractController
  * </p>
  *
  * @author c332030
  * @version 1.0
  */
 @Slf4j
-public abstract class BaseController {
+public abstract class AbstractController {
 
     @Autowired
     protected HttpServletRequest request;
@@ -62,6 +62,8 @@ public abstract class BaseController {
             log.error("获取响应 Writer 失败", e);
         }
     }
+
+    public static final ResponseEntity<String> RESPONSE_ENTITY_EMPTY = new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 
     /**
      * <p>
