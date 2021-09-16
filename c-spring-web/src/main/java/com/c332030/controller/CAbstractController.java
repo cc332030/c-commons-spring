@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,14 +19,14 @@ import com.c332030.constant.CharsetConstants;
 
 /**
  * <p>
- * Description: AbstractController
+ * Description: CAbstractController
  * </p>
  *
  * @author c332030
  * @version 1.0
  */
 @Slf4j
-public abstract class AbstractController {
+public abstract class CAbstractController {
 
     @Autowired
     protected HttpServletRequest request;
@@ -61,22 +59,6 @@ public abstract class AbstractController {
         } catch (IOException e) {
             log.error("获取响应 Writer 失败", e);
         }
-    }
-
-    public static final ResponseEntity<String> RESPONSE_ENTITY_EMPTY = new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-
-    /**
-     * <p>
-     * Description: 获取成功的 newResponseEntity
-     * </p>
-     *
-     * @param t 内容
-     * @param <T> 内容类型
-     * @return ResponseEntity 实体
-     * @author c332030
-     */
-    protected static <T> ResponseEntity<T> newResponseEntityOK(T t) {
-        return new ResponseEntity<>(t, HttpStatus.OK);
     }
 
 }
