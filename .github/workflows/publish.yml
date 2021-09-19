@@ -30,7 +30,7 @@ jobs:
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
       - uses: actions/cache@v2
         with:
-          key: gradle
+          key: gradle1
           path: |
             ~/.gradle/wrapper
             ~/.gradle/jdks
