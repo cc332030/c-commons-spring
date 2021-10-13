@@ -14,11 +14,9 @@
       <then>
         <file>${logging.file.path}/${spring.application.name}/${logging.level.root}.log</file>
       </then>
-    </if>
-    <if condition='!property("os.name").startsWith("Windows")'>
-      <then>
+      <else>
         <file>${logging.file.path}/${logging.level.root}.log</file>
-      </then>
+      </else>
     </if>
 
     <encoder>
@@ -31,11 +29,9 @@
         <then>
           <fileNamePattern>${logging.file.path}/${spring.application.name}/${logging.level.root}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
         </then>
-      </if>
-      <if condition='!property("os.name").startsWith("Windows")'>
-        <then>
+        <else>
           <fileNamePattern>${logging.file.path}/${logging.level.root}.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-        </then>
+        </else>
       </if>
 
       <maxHistory>${logging.file.max-history}</maxHistory>

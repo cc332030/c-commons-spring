@@ -13,11 +13,9 @@
       <then>
         <file>${logging.file.path}/${spring.application.name}/error.log</file>
       </then>
-    </if>
-    <if condition='!property("os.name").startsWith("Windows")'>
-      <then>
+      <else>
         <file>${logging.file.path}/error.log</file>
-      </then>
+      </else>
     </if>
 
     <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -37,11 +35,9 @@
         <then>
           <fileNamePattern>${logging.file.path}/${spring.application.name}/error.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
         </then>
-      </if>
-      <if condition='!property("os.name").startsWith("Windows")'>
-        <then>
+        <else>
           <fileNamePattern>${logging.file.path}/error.log-%d{yyyy-MM-dd}.%i.gz</fileNamePattern>
-        </then>
+        </else>
       </if>
 
       <maxHistory>${logging.file.max-history}</maxHistory>
