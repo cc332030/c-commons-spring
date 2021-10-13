@@ -2,7 +2,7 @@ package com.c332030.spring.cache;
 
 import org.springframework.stereotype.Service;
 
-import com.c332030.service.SpringBaseService;
+import com.c332030.service.CAbstractSpringService;
 import com.c332030.service.cache.ICacheService;
 
 /**
@@ -14,6 +14,6 @@ import com.c332030.service.cache.ICacheService;
  * @version 1.0
  */
 @Service
-public class CacheService extends SpringBaseService implements ICacheService {
+public class CacheService extends CAbstractSpringService implements ICacheService {
 
 }

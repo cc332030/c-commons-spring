@@ -5,7 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.c332030.service.SpringBaseService;
+import com.c332030.service.CAbstractSpringService;
 import com.c332030.service.cache.IRedisService;
 
 /**
@@ -17,7 +17,7 @@ import com.c332030.service.cache.IRedisService;
  * @version 1.0
  */
 @Service
-public class RedisService extends SpringBaseService implements IRedisService {
+public class RedisService extends CAbstractSpringService implements IRedisService {
 
     @Autowired
     private RedisTemplate<Object, Object> redisTemplate;
