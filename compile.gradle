@@ -1,0 +1,30 @@
+
+test {
+  useJUnitPlatform()
+}
+
+kotlin {
+  jvmToolchain {
+    languageVersion.set(JavaLanguageVersion.of(jdk_version)) // "8"
+  }
+}
+
+java {
+  withSourcesJar()
+}
+
+jar {
+  enabled = true
+  archiveClassifier.set('')
+}
+
+bootJar {
+  enabled = false
+}
+
+idea {
+  module {
+    downloadJavadoc = false
+    downloadSources = false
+  }
+}
