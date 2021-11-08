@@ -25,5 +25,6 @@ bootJar {
 idea {
   module {
     downloadJavadoc = false
+    downloadSources = false
   }
 }
