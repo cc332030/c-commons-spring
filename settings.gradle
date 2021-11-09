@@ -56,14 +56,14 @@ dependencyResolutionManagement {
         url "https://maven.aliyun.com/repository/public"
       }
       maven {
-        url repoReleaseAliyun
+        url repoSnapshotAliyun
         credentials {
           username aliyunPackagesUsername
           password aliyunPackagesPassword
         }
       }
       maven {
-        url repoSnapshotAliyun
+        url repoReleaseAliyun
         credentials {
           username aliyunPackagesUsername
           password aliyunPackagesPassword
