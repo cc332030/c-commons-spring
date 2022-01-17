@@ -1,11 +1,4 @@
 
 spring:
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
   mvc:
     log-request-details: true
-
-logging:
-  file:
-    #    避免以月为单位的 bug
-    max-history: 32

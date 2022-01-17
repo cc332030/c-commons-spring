@@ -1,7 +1,0 @@
-
-logging:
-  file:
-    path: logs
-  logback:
-    rollingpolicy:
-      max-file-size: 1GB
