@@ -16,6 +16,9 @@ java {
 jar {
   enabled = true
   archiveClassifier.set('')
+
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
 }
 
 bootJar {
