@@ -3,8 +3,7 @@ subprojects {
 
   dependencies {
 
-    compileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
-    testCompileOnly group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-quartz'
 
   }
 
