@@ -13,7 +13,7 @@ on:
 
 jobs:
   gradle:
-    uses: cc332030/gradle/.github/workflows/gradle.yml@master
+    uses: cc332030/gradle-action/.github/workflows/gradle.yml@main
     secrets:
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
