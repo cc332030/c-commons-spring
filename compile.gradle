@@ -6,6 +6,7 @@ test {
 kotlin {
   jvmToolchain {
     languageVersion.set(JavaLanguageVersion.of(jdk_version))
+    vendor.set(JvmVendorSpec.IBM_SEMERU)
   }
 }
 
