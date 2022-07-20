@@ -12,13 +12,11 @@ on:
       - "*"
 
 jobs:
-  gradle:
-    uses: cc332030/gradle-action/.github/workflows/gradle.yml@main
+  publish:
+    uses: cc332030/gradle/.github/workflows/publish.yml@master
     secrets:
       GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
       GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
       GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
       OSSRH_USERNAME: ${{ github.actor }}
       OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-    with:
-      command: sh gradlew --refresh-dependencies publish
