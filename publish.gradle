@@ -67,8 +67,9 @@ publishing {
 
 }
 
-if(!isWindows && !isSnapshot) {
+if(!isWindows) {
   signing {
+    useGpgCmd()
     sign publishing.publications
   }
 }
